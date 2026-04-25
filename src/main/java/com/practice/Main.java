@@ -10,6 +10,5 @@ public class Main {
 
     int aB = 100;
     System.out.println(aB);
-
   }
 }
