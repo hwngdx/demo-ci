@@ -6,7 +6,7 @@ on:
 
 jobs:
   checkstyle:
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
     permissions:
       contents: read
       pull-requests: write
