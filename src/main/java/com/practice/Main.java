@@ -8,7 +8,7 @@ public class Main {
     // to see how IntelliJ IDEA suggests fixing it.
     IO.println(String.format("Hello and welcome!"));
 
-    int aB = 100;
-    System.out.println(aB);
+    int abc_aaa = 100;
+    System.out.println(abc_aaa);
   }
 }
