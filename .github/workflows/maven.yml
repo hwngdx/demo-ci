@@ -21,8 +21,10 @@ jobs:
           distribution: 'temurin'
           cache: 'maven'
 
-      - name: Run Checkstyle & Inline Feedback
+      - name: Inline Checkstyle Comments
         uses: dbelyaev/action-checkstyle@master
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          fail_on_error: true
+
+      - name: Enforce Checkstyle
+        run: mvn checkstyle:check
