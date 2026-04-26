@@ -11,15 +11,16 @@ jobs:
       pull-requests: write
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-java@v4
-        with:
-          java-version: '17'
-          distribution: 'temurin'
 
-      - name: Checkstyle
+      - name: Run Checkstyle
         uses: dbelyaev/action-checkstyle@master
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           level: 'warning'
-          # Quan trọng: Dòng này sẽ làm pipeline đỏ lòm nếu có bất kỳ lỗi format nào
+          # ÉP PHẢI FAIL: Không có dòng này thì vĩnh viễn nó sẽ Pass
           fail_on_error: true
+
+      # Nếu bước trên không tự ngắt, thêm bước này để ép nút Merge bị khóa
+      - name: Force Failure on Warnings
+        if: steps.checkstyle.outputs.total_issues > 0
+        run: exit 1
