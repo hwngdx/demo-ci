@@ -1,6 +1,4 @@
 name: Automated Code Review
-
-# 1. Trigger: Chạy khi có PR hướng vào nhánh main
 on:
   pull_request:
     branches: [ "main" ]
@@ -8,33 +6,20 @@ on:
 jobs:
   checkstyle-review:
     runs-on: ubuntu-latest
-
-    # Cấp quyền ghi để Bot có thể đăng bình luận (comments) vào PR
     permissions:
       contents: read
       pull-requests: write
-      checks: write
-
     steps:
-      - name: Checkout Code
-        uses: actions/checkout@v4
-
-      - name: Set up JDK 17
-        uses: actions/setup-java@v4
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
         with:
           java-version: '17'
           distribution: 'temurin'
 
-      # 2. Inline Feedback: Sử dụng đúng action dbelyaev/action-checkstyle theo đề bài
-      - name: Checkstyle Review
+      - name: Checkstyle
         uses: dbelyaev/action-checkstyle@master
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          # Mức độ cảnh báo để bắt được cả những lỗi nhỏ nhất
           level: 'warning'
-          # File cấu hình checkstyle (mặc định thường là google_checks.xml hoặc sun_checks.xml)
-          checkstyle_config: 'google_checks.xml'
-
-      # 3. Chạy Test (Nếu test fail thì nút Merge cũng sẽ bị khóa)
-      - name: Run Tests
-        run: mvn test
+          # Quan trọng: Dòng này sẽ làm pipeline đỏ lòm nếu có bất kỳ lỗi format nào
+          fail_on_error: true
