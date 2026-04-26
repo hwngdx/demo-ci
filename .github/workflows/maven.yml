@@ -21,10 +21,13 @@ jobs:
           distribution: 'temurin'
           cache: 'maven'
 
-      - name: Inline Checkstyle Comments
-        uses: dbelyaev/action-checkstyle@master
+      - name: Run Checkstyle & Inline Feedback
+        uses: reviewdog/action-checkstyle@v1
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
+            github_token: ${{ secrets.GITHUB_TOKEN }}
+            reporter: github-pr-review
+            level: warning
+            fail_on_error: true
 
       - name: Enforce Checkstyle
         run: mvn checkstyle:check
