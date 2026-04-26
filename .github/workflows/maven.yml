@@ -25,4 +25,4 @@ jobs:
         uses: dbelyaev/action-checkstyle@master
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          level: error
+          fail_on_error: true
